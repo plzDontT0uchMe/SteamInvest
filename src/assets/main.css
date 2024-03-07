@@ -1,0 +1,109 @@
+@import './base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root[data-theme=dark] {
+    --color-text: rgba(235, 235, 235, 0.64);
+    --color-navbar: #181818;
+    --color-navbar-text: white;
+    --color-navbar-svg-fill: rgb(131, 128, 128);
+    --color-body-background: rgb(29, 29, 29);
+    --color-main-background: rgb(19, 20, 22);
+    --color-second-background: rgb(42, 42, 42);
+    --color-main-header-border: rgb(0, 0, 0);
+    --color-dialog-background: #181818;
+    --color-table-hover: rgb(14, 14, 14);
+    --color-table-header-text: rgb(156, 163, 175);
+    --color-table-header-background: #181818;
+    --color-table-body-background: #181818;
+    --color-table-input-background: #181818;
+    --color-portfolio-badge-background: #181818;
+    --color-portfolio-badge-text: rgb(148, 140, 140);
+    --color-portfolio-stats-background: #181818;
+    --color-pagination-background: #131313;
+    --color-pagination-hover: #191919;
+    --color-pagination-active: #191919;
+    --color-pagination-text: white;
+    --color-dropdown-background: rgb(40, 40, 40);
+    --color-dropdown-text: white;
+    --color-dropdown-hover: rgb(107, 105, 105);
+    --color-dropdown-active: rgb(131, 128, 128);
+    --color-selection: #b6b6b6;
+    --color-scroll-track: #191919;
+    --color-scroll-thumb: #121212;
+    --color-tooltip-background: rgb(134, 38, 38);
+    --color-tooltip-text: white;
+    /* ... */
+}
+
+[data-theme=dark] .bg-main {
+    background-color: rgb(31, 41, 55);
+}
+[data-theme=dark] .hover\:bg-main:hover {
+    background-color: rgb(31, 41, 55);
+}
+[data-theme=dark] .bg-second {
+    @apply bg-gray-900;
+}
+[data-theme=dark] .bg-input {
+    background-color: #262626;
+}
+[data-theme=dark] .text-main {
+    color: white;
+}
+[data-theme=dark] .header-border-color {
+    border-color: var(--color-main-header-border);
+}
+[data-theme=dark] .border-color {
+    border-color: black;
+}
+[data-theme=dark] .custom-input {
+    @apply w-full rounded-md border py-3 px-6 text-base font-medium outline-none focus:shadow-md h-12;
+    @apply border-black bg-[#262626] text-[#b6b7b9] focus:border-[#96969b];
+}
+[data-theme=dark] .input-group-rounded {
+    @apply rounded-r-none;
+}
+[data-theme=dark] .auth-button {
+    @apply btn focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    @apply text-main bg-[#303030] focus:bg-[#252525] hover:bg-[#252525];
+}
+
+:root {
+    background-color: var(--color-body-background);
+    color: var(--color-text);
+}
+
+::selection {
+    background: var(--color-selection); /* Safari */
+}
+
+*::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: var(--color-scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 14px;
+    background-color: var(--color-scroll-thumb);
+}
+
+*, ::before, ::after{
+    border-color: var(--color-main-header-border);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    transition: background-color 0s 600000s, color 0s 600000s;
+}
+
+.tooltip::before {
+    background-color: var(--color-tooltip-background);
+    color: var(--color-tooltip-text);
+}
