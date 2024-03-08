@@ -1,11 +1,10 @@
 <script setup>
-
-import HomeIcon from "@/components/icons/AboutIcon.vue";
+import AboutIcon from "@/assets/images/steamInvestAbout.png";
 </script>
 
 <template>
     <div class="flex-grow-[3] flex justify-center items-center w-screen">
-        <HomeIcon />
+        <img :src="AboutIcon">
         <div class="ml-10 text-white"><strong>Steam-Invest</strong> – это платформа для отслеживания инвестиций в Steam.</div>
     </div>
 </template>
