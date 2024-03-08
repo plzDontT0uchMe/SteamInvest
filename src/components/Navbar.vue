@@ -13,7 +13,15 @@
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
                 <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:border-gray-700 bg-navbar text-navbar-text">
                     <li>
-                        <router-link to="/" class="btn btn-ghost normal-case">Home</router-link>
+                        <router-link to="/home" class="btn btn-ghost normal-case">Home</router-link>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+                <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:border-gray-700 bg-navbar text-navbar-text">
+                    <li>
+                        <router-link to="/settings" class="btn btn-ghost normal-case">Settings</router-link>
                     </li>
                 </ul>
             </div>

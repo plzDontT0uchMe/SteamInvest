@@ -14,7 +14,7 @@ const menuItems = ref([
 </script>
 
 <template>
-    <div class="flex justify-between m-auto mt-10 w-[80vw] h-[80vh]">
+    <div class="flex-grow-[3] flex justify-between m-20">
         <ul class="menu flex items-center rounded-xl w-[30%] h-full">
             <li v-for="(item, index) in menuItems" :key="index">
                 <router-link :class="{ active: item.component === $route.name }" :to="{name: item.component}" > {{ item.name }} </router-link>
