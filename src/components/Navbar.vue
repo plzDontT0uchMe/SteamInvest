@@ -1,4 +1,25 @@
 <script setup>
+import axios from "@/axios/index.js";
+
+const signup = async () => {
+    try{
+        const resp = await axios.get('/api/user/assets');
+        console.log(resp)
+    }
+    catch (e){
+        console.log(e);
+    }
+}
+
+const getSUKA = async () => {
+    try{
+        const resp = await axios.get('/api/user/init');
+        console.log(resp)
+    }
+    catch (e){
+        console.log(e);
+    }
+}
 
 </script>
 
@@ -28,8 +49,12 @@
 
             <div class="md:order-3 inline-flex items-center">
                 <div class="flex">
-                    <div class="h-10 block px-4 py-2 mr-3 leading-loose text-xs text-center text-black font-semibold bg-gray-50 hover:bg-gray-300 hover:scale-110 rounded-xl">Login</div>
-                    <div class="h-10 block px-4 py-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 hover:scale-110 rounded-xl">Sign Up</div>
+                    <div class="h-10 block px-4 py-2 mr-3 leading-loose text-xs text-center text-black font-semibold bg-gray-50 hover:bg-gray-300 hover:scale-110 rounded-xl"
+                        @click="getSUKA"
+                    >Login</div>
+                    <div class="h-10 block px-4 py-2 leading-loose text-xs text-center text-white font-semibold bg-blue-600 hover:bg-blue-700 hover:scale-110 rounded-xl"
+                        @click="signup"
+                    >Sign Up</div>
                 </div>
             </div>
         </div>

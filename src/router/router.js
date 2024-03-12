@@ -1,15 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Settings from "@/views/Settings.vue";
-import About from "@/views/About.vue";
-import MyAccount from "@/components/menuItems/MyAccount.vue";
-import ApiKeys from "@/components/menuItems/ApiKeys.vue";
-import Sessions from "@/components/menuItems/Sessions.vue";
-import Socials from "@/components/menuItems/Socials.vue";
-import Tariffs from "@/components/menuItems/Tariffs.vue";
-import Friends from "@/components/menuItems/Friends.vue";
-import Security from "@/components/menuItems/Security.vue";
-import Notifications from "@/components/menuItems/Notifications.vue";
-import Wallet from "@/components/menuItems/Wallet.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,58 +7,58 @@ const router = createRouter({
         {
             path: '/',
             name: 'about',
-            component: About
+            component: () => import("@/views/About.vue")
         },
         {
             path: '/settings',
             name: 'settings',
-            component: Settings,
+            component: () => import("@/views/Settings.vue"),
             children:
             [
                 {
                     path: 'my-account',
                     name: 'my-account',
-                    component: MyAccount
+                    component: () => import("@/components/menuItems/MyAccount.vue")
                 },
                 {
                     path: 'api-keys',
                     name: 'api-keys',
-                    component: ApiKeys
+                    component: () => import("@/components/menuItems/ApiKeys.vue")
                 },
                 {
                     path: 'sessions',
                     name: 'sessions',
-                    component: Sessions
+                    component: () => import("@/components/menuItems/Sessions.vue")
                 },
                 {
                     path: 'socials',
                     name: 'socials',
-                    component: Socials
+                    component: () => import("@/components/menuItems/Socials.vue")
                 },
                 {
                     path: 'tariffs',
                     name: 'tariffs',
-                    component: Tariffs
+                    component: () => import("@/components/menuItems/Tariffs.vue")
                 },
                 {
                     path: 'friends',
                     name: 'friends',
-                    component: Friends
+                    component: () => import("@/components/menuItems/Friends.vue")
                 },
                 {
                     path: 'security',
                     name: 'security',
-                    component: Security
+                    component: () => import("@/components/menuItems/Security.vue")
                 },
                 {
                     path: 'notifications',
                     name: 'notifications',
-                    component: Notifications
+                    component: () => import("@/components/menuItems/Notifications.vue")
                 },
                 {
                     path: 'wallet',
                     name: 'wallet',
-                    component: Wallet
+                    component: () => import("@/components/menuItems/Wallet.vue")
                 }
             ]
         }
