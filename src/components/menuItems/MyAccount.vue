@@ -2,6 +2,8 @@
 import {computed, onMounted, ref, watchEffect} from "vue";
 import axios from "@/axios";
 import ModalConfirm from "@/components/ModalConfirm.vue";
+import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
+import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
 
 const images = ref([
     {
@@ -82,7 +84,7 @@ const loadImage = (event) => {
     myFile.value.value = ''
 }
 const dropImage = (event) => {
-    event.target.classList.remove(['opacity-50'], ['scale-110'], ['cursor-pointer'])
+    isDragImage.value = false;
     const file = event.dataTransfer.files[0];
     const img = {
         url: URL.createObjectURL(file),
@@ -126,36 +128,47 @@ const downloadImage = async (img) => {
 
 const modal = ref({
     show: false,
-    confirm: false,
-    img: null,
-    text: null,
     action: null,
-    buttons: null
+    header: null,
+    body: null,
+    footer: null
 });
-const showModal = (img, text, action, buttons) => {
+const showModal = (action, header, body, footer) => {
     modal.value = {
         show: true,
-        confirm: false,
-        img: img,
-        text: text,
         action: action,
-        buttons: buttons
+        header: header,
+        body: body,
+        footer: footer
     }
 }
-watchEffect(async () => {
-    if(modal.value.confirm){
-        switch (modal.value.action){
-            case 'delete':{
-                deleteImage(modal.value.img)
-                break;
-            }
-            case 'download':{
-                await downloadImage(modal.value.img)
-                break;
-            }
+const modalAction = (async () => {
+    modal.value.show = false;
+    switch (modal.value.action){
+        case 'delete':{
+            deleteImage(modal.value.body)
+            break;
+        }
+        case 'download':{
+            await downloadImage(modal.value.body)
+            break;
         }
     }
 })
+
+const isDragImage = ref(false);
+
+const getStyle = (element, type) =>
+{
+    const styles = {
+        'button': {
+            'download' : 'bg-green-600 hover:bg-green-700',
+            'delete' : 'bg-red-600 hover:bg-red-700'
+        }
+    };
+    return styles[element][type];
+}
+
 </script>
 
 <template>
@@ -171,7 +184,7 @@ watchEffect(async () => {
                 :class="{'opacity-0' : indexDisplayImage === 1 || Object.keys(images).length === 2}"
                 @click="indexDisplayImage--"
             >
-                <
+                <ArrowIcon />
             </button>
 
             <input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" hidden @change="loadImage">
@@ -183,11 +196,12 @@ watchEffect(async () => {
                 >
                     <div v-if="img?.create"
                         class="btn btn-square btn-outline btn-sm flex justify-center items-center w-32 h-32"
+                        :class="{'opacity-50 scale-110 border-dashed': isDragImage}"
                         draggable="true"
                         @click="myFile.click"
                         @drop.prevent="dropImage"
-                        @dragover.prevent="$event.target.classList.add(['opacity-50'], ['scale-110'], ['cursor-pointer'])"
-                        @dragleave.prevent="$event.target.classList.remove(['opacity-50'], ['scale-110'], ['cursor-pointer'])"
+                        @dragover.prevent="isDragImage = true"
+                        @dragleave.prevent="isDragImage = false"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </div>
@@ -199,17 +213,17 @@ watchEffect(async () => {
                         <div @mouseover="hoverImage === null ? hoverImage = img.url : hoverImage" @mouseleave="hoverImage = null">
 
                             <img
-                                class="w-32 h-32 rounded-lg cursor-pointer hover:scale-110 hover:opacity-50 transition-all delay-75"
+                                class="w-32 h-32 rounded-lg cursor-pointer hover:opacity-50 transition-all delay-75"
                                 :src="img.url"
-                                :class="{'scale-110 outline': img === selectedImage && !img?.isLoading, 'scale-100 outline': img?.isLoading, 'opacity-50': img?.progress > 0}"
+                                :class="{'scale-110 outline': img === selectedImage && !img?.progress > 0, 'opacity-50': img?.progress > 0, 'scale-110': img.url === hoverImage}"
                                 @click="setImage(img)"
                                 alt="image"
                             >
 
                             <transition name="show">
-                            <div v-show="hoverImage === img.url && !img?.isLoading" class="absolute top-[-6px] right-[-6px] transition-all duration-[2s]">
-                                <button class="btn btn-square btn-outline btn-xs btn-error transition-all delay-[1s]"
-                                        @click="showModal(img, 'Вы действительно хотите удалить?', 'delete', ['Отменить', 'Удалить'])">
+                            <div v-show="hoverImage === img.url && !img?.isLoading" class="absolute top-[-6px] right-[-6px]">
+                                <button class="btn btn-square btn-outline btn-xs btn-error"
+                                        @click="showModal('delete', 'Вы действительно хотите удалить?', img, ['Отменить', 'Удалить'])">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
@@ -229,7 +243,7 @@ watchEffect(async () => {
                         <div v-if="img?.isLoading" class="absolute left-0 flex justify-between items-center w-full h-10 mt-3">
                             <button v-if="img?.progress === 0"
                                 class="btn btn-outline btn-success btn-sm w-[70%]"
-                                @click="showModal(img, 'Вы действительно хотите загрузить?', 'download', ['Отменить', 'Загрузить'])"
+                                @click="showModal('download', 'Вы действительно хотите загрузить?', img, ['Отменить', 'Загрузить'])"
                             >
                                 Загрузить
                             </button>
@@ -237,7 +251,7 @@ watchEffect(async () => {
                                 <span class="loading loading-spinner text-success"></span>
                             </button>
                             <button v-if="img?.progress === 100" class="btn btn-outline btn-success btn-sm w-[70%] disabled">
-                                ✓
+                                <SuccessIcon />
                             </button>
                             <button class="btn btn-square btn-outline btn-error btn-sm" @click="deleteLocalImage(img)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -255,12 +269,48 @@ watchEffect(async () => {
                 :class="{'opacity-0' : indexDisplayImage === Object.keys(images).length - 2 || Object.keys(images).length === 2}"
                 @click="indexDisplayImage++"
             >
-                >
+                <ArrowIcon class="rotate-180" />
             </button>
 
         </div>
 
-        <ModalConfirm v-model="modal" v-if="modal.show && !modal.confirm" />
+        <ModalConfirm v-if="modal.show"
+            :show="modal.show"
+            :action="modal.action"
+            :header="modal.header"
+            :body="modal.body.url"
+            :footer="modal.footer"
+            @close="modal.show = false"
+            @action="modalAction"
+        >
+            <template v-slot:header>
+                <div class="flex justify-center items-center text-xl mb-6">
+                    <p>{{ modal.header }}</p>
+                </div>
+            </template>
+            <template v-slot:body>
+                <div class="flex justify-center items-center w-64 h-64 mb-6">
+                    <img :src="modal.body.url">
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div class="flex justify-center items-center">
+                    <button
+                        class="bg-gray-500 p-2 rounded-xl mr-2 text-white"
+                        @click="modal.show = false"
+                    >
+                        {{modal.footer[0]}}
+                    </button>
+                    <button
+                        class="bg-gray-500 p-2 rounded-xl ml-2 text-white"
+                        @click="modalAction"
+                        :class="getStyle('button', modal.action)"
+                    >
+                        {{modal.footer[1]}}
+                    </button>
+                </div>
+            </template>
+        </ModalConfirm>
     </div>
 </template>
 
