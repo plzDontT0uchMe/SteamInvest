@@ -206,12 +206,14 @@ watchEffect(async () => {
                                 alt="image"
                             >
 
-                            <div v-show="hoverImage === img.url && !img?.isLoading" class="absolute top-[-17px] right-[-17px]">
-                                <button class="btn btn-circle btn-outline btn-xs btn-error"
+                            <transition name="show">
+                            <div v-show="hoverImage === img.url && !img?.isLoading" class="absolute top-[-6px] right-[-6px] transition-all duration-[2s]">
+                                <button class="btn btn-square btn-outline btn-xs btn-error transition-all delay-[1s]"
                                         @click="showModal(img, 'Вы действительно хотите удалить?', 'delete', ['Отменить', 'Удалить'])">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
+                            </transition>
 
                         </div>
 
@@ -263,5 +265,15 @@ watchEffect(async () => {
 </template>
 
 <style scoped>
+.show-enter-active,
+.show-leave-active {
+    transition: scale 0.3s ease-in-out;
+    transition-delay: 0.2s;
+}
 
+.show-enter-from,
+.show-leave-to {
+    transition-delay: 0s;
+    scale: 0;
+}
 </style>
