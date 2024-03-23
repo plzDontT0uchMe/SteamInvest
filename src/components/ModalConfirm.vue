@@ -51,14 +51,14 @@ const getStyle = (element, type) =>
                         class="bg-gray-500 p-2 rounded-xl mr-2 text-white"
                         @click="$emit('close')"
                     >
-                        {{footer[0]}}
+                        {{ footer[0] }}
                     </button>
                     <button
                         class="bg-gray-500 p-2 rounded-xl ml-2 text-white"
                         @click="$emit('action')"
                         :class="getStyle('button', action)"
                     >
-                        {{footer[1]}}
+                        {{ footer[1] }}
                     </button>
                 </div>
             </slot>
