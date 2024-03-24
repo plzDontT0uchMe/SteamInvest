@@ -1,11 +1,9 @@
 <script setup>
 import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
-import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
+import ArrowIcon from "@/components/slider/ArrowIcon.vue";
 import {computed, onMounted, ref, watch} from "vue";
 import axios from "@/axios/index.js";
 import ModalConfirm from "@/components/ModalConfirm.vue";
-
-const tempArray = ref([])
 
 const props = defineProps({
     name: {
@@ -17,18 +15,7 @@ const images = defineModel('images',{
     default: []
 });
 
-const tempImages = defineModel('tempImages',{
-    default: []
-});
-
-watch(() => tempImages.value, (value) =>{
-    console.log(value)
-}, {immediate: true})
-
-const emits = defineEmits(['getImages'])
-
 onMounted(() => {
-    console.log('MOUNTED')
     initImages();
 })
 
@@ -37,13 +24,11 @@ const hoverImage = ref(0);
 const indexDisplayImage = ref(0);
 const countDisplayImages = 3;
 const initImages = () => {
-    console.log('INIT')
-    const tempArray = [...images.value]
-    images.value = [...tempArray.sort((a, b) => {
+    images.value = images.value.sort((a, b) => {
         if(a.id > b.id)
             return -1;
         return 1;
-    })];
+    });
     images.value.unshift({id:-1, is_active: false, create: true});
     images.value.push({id:-2, is_active: false, empty: true});
     selectedImage.value = images.value.find((item) => item.is_active);
@@ -113,8 +98,7 @@ const downloadImage = async (img) => {
         const resp = await axios.post('/api/user/assets', data, {
             onUploadProgress: progressEvent => img.progress = progressEvent.progress * 100
         });
-        tempImages.value = resp.data.data[props.name]
-        console.log([...tempImages.value])
+        images.value = resp.data.data[props.name]
     }
     catch (e){
         console.log(e);
@@ -180,7 +164,7 @@ const getStyle = (element, type) =>
             <ArrowIcon />
         </button>
 
-        <input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" @change="loadImage">
+        <input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" hidden @change="loadImage">
 
         <!--- <TransitionGroup name="list" tag="div" class="flex justify-around items-center flex-nowrap w-full"> --->
         <template
