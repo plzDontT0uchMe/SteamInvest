@@ -33,7 +33,7 @@ const getStyle = (element, type) =>
 </script>
 
 <template>
-    <div class="fixed top-0 left-0 flex justify-center items-center w-screen h-screen backdrop-blur-[2px]">
+    <div class="fixed top-0 left-0 flex justify-center items-center w-screen h-screen backdrop-blur-[2px] z-10">
         <div class="p-6 bg-[#1D1D1D] border-black border-2 rounded-xl flex justify-around items-center flex-col">
             <slot name="header">
                 <div class="flex justify-center items-center text-xl mb-6">

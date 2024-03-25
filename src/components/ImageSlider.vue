@@ -1,6 +1,6 @@
 <script setup>
 import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
-import ArrowIcon from "@/components/slider/ArrowIcon.vue";
+import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
 import {computed, onMounted, ref, watch} from "vue";
 import axios from "@/axios/index.js";
 import ModalConfirm from "@/components/ModalConfirm.vue";
