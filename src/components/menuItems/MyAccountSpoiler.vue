@@ -1,8 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import {computed, ref, watch} from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
-
 // Import Swiper styles
 import 'swiper/css';
 
@@ -10,24 +9,38 @@ import 'swiper/css/navigation';
 import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
 import axios from "@/axios/index.js";
 import ModalConfirm from "@/components/ModalConfirm.vue";
+import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
 
 const props = defineProps({
     header: {
         type: String
     },
-	title: {
+	type: {
 		type: String
 	}
 })
 
-const assets = defineModel({
+const assets = defineModel('assets', {
     default: []
 })
 
-const selectedAsset = ref(0);
-const hoverAsset = ref(0);
-const myFile = ref();
+const selectedAsset = defineModel('selectedAsset', {
+	default: undefined
+})
+
+const hoverAsset = ref(null);
 const isDragAsset = ref(false);
+const myFile = ref(null);
+
+watch(() => assets.value,
+	() => selectedAsset.value = assets.value.find((item) => item.is_active),
+	{ deep: true, immediate: true }
+);
+
+const setSelectedAsset = (item) => {
+	selectedAsset.value = item;
+}
+
 const loadAsset = (event) => {
 	const file = event.target.files[0];
 	const asset = {
@@ -37,7 +50,6 @@ const loadAsset = (event) => {
 		progress: 0
 	}
 	assets.value.unshift(asset);
-	setAsset(asset);
 	myFile.value.value = ''
 }
 const dropAsset = (event) => {
@@ -50,20 +62,17 @@ const dropAsset = (event) => {
 		progress: 0
 	}
 	assets.value.unshift(asset);
-	setAsset(asset);
 	myFile.value.value = ''
 }
-const setAsset = (item) => {
-	selectedAsset.value = item;
-}
 const deleteLocalAsset = (asset) => {
-	URL.revokeObjectURL(asset.url)
-	assets.value = assets.value.filter((item) => item.url !== asset.url)
+	URL.revokeObjectURL(asset.url);
+	assets.value = assets.value.filter((item) => item.url !== asset.url);
 }
 const deleteAsset = async (asset) => {
 	try{
 		const resp = await axios.delete(`/api/user/assets/${asset.id}`);
-		assets.value = resp.data.data[props.title];
+		if(!resp?.data?.success) throw Error('Ошибка!');
+		assets.value = resp.data.data[props.type];
 	}
 	catch (e){
 		console.log(e);
@@ -72,12 +81,12 @@ const deleteAsset = async (asset) => {
 const downloadAsset = async (asset) => {
 	const data = new FormData();
 	data.append('asset', asset.file);
-	data.append('type', 'avatar');
+	data.append('type', props.type);
 	try{
 		const resp = await axios.post('/api/user/assets', data, {
 			onUploadProgress: progressEvent => asset.progress = progressEvent.progress * 100
 		});
-		assets.value = resp.data.data[props.title];
+		assets.value = resp.data.data[props.type];
 	}
 	catch (e){
 		console.log(e);
@@ -91,6 +100,15 @@ const modal = ref({
 	body: null,
 	footer: null
 });
+const showModal = (action, header, body, footer) => {
+	modal.value = {
+		show: true,
+		action: action,
+		header: header,
+		body: body,
+		footer: footer
+	}
+}
 const modalAction = (async () => {
 	modal.value.show = false;
 	switch (modal.value.action){
@@ -104,15 +122,6 @@ const modalAction = (async () => {
 		}
 	}
 })
-const showModal = (action, header, body, footer) => {
-	modal.value = {
-		show: true,
-		action: action,
-		header: header,
-		body: body,
-		footer: footer
-	}
-}
 const getStyle = (element, type) =>
 {
 	const styles = {
@@ -124,96 +133,117 @@ const getStyle = (element, type) =>
 	return styles[element][type];
 }
 
+const isActiveSpoiler = ref(true);
+
+const activeTheme = computed(() => {
+	console.log(document.querySelector('html').getAttribute('data-theme'))
+	return document.querySelector('html').getAttribute('data-theme')
+});
+
 </script>
 
 <template>
 	<input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" hidden @change="loadAsset">
-    <div class="text-[24px] mt-6">{{ header }}</div>
-    <swiper
-        :navigation="true"
-        :slidesPerView="3"
-        :spaceBetween="10"
-        :modules="[Navigation]"
-        class="swiper"
-        :centeredSlides="true"
-        :centeredSlidesBounds="true"
-        :slideToClickedSlide="true"
-    >
-	    <swiper-slide>
-		    <div
-		         class="btn btn-square btn-outline btn-sm flex justify-center items-center w-32 h-32"
-		         :class="{'opacity-50 scale-110 border-dashed': isDragAsset}"
-		         draggable="true"
-		         @click="myFile.click"
-		         @drop.prevent="dropAsset"
-		         @dragover.prevent="isDragAsset = true"
-		         @dragleave.prevent="isDragAsset = false"
-		    >
-			    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-		    </div>
-	    </swiper-slide>
+	<div class="flex flex-col justify-center items-center w-full">
+		<div class="text-[24px] text-main mt-6 cursor-pointer select-none flex justify-center items-center" @click="isActiveSpoiler = !isActiveSpoiler">
+			{{ header }}
+			<ArrowIcon class="w-4 h-4 ml-2 mt-1 transition-all duration-500" :class="isActiveSpoiler ? 'rotate-[90deg]' : 'rotate-[-90deg]'"/>
+		</div>
+		<Transition name="showSpoiler">
+			<swiper
+				v-show="isActiveSpoiler"
+				:navigation="true"
+				:slidesPerView="assets.length ? 3 : 1"
+				:spaceBetween="10"
+				:modules="[Navigation]"
+				class="swiper"
+				:centeredSlides="true"
+				:centeredSlidesBounds="true"
+				:slideToClickedSlide="true"
+			>
+				<swiper-slide
+					class="swiper-slide"
+				>
+					<div
+						class="btn btn-square btn-outline btn-sm flex justify-center items-center w-32 h-32"
+						:class="{'opacity-50 scale-110 border-dashed': isDragAsset}"
+						draggable="true"
+						@click="myFile.click"
+						@drop.prevent="dropAsset"
+						@dragover.prevent="isDragAsset = true"
+						@dragleave.prevent="isDragAsset = false"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+					</div>
+				</swiper-slide>
 
-        <swiper-slide class="swiper-slide"
-	        v-for="item in assets"
-            :key="item">
+				<swiper-slide
+					class="swiper-slide"
+				    v-for="(item, index) in assets"
+				    :key="index"
+				>
+					<div class="relative">
 
-	        <div class="relative">
+						<div @mouseover="hoverAsset === null ? hoverAsset = item.url : hoverAsset" @mouseleave="hoverAsset = null">
 
-		        <div @mouseover="hoverAsset === null ? hoverAsset = item.url : hoverAsset" @mouseleave="hoverAsset = null">
+							<img
+								class="w-32 h-32 rounded-lg cursor-pointer hover:opacity-50 transition-all delay-75"
+								:src="item.url"
+								:class="{'scale-110 outline': item === selectedAsset && !item?.progress > 0, 'opacity-50': item?.progress > 0, 'scale-110': item.url === hoverAsset}"
+								@click="setSelectedAsset(item)"
+								alt="image"
+							>
 
-			        <img
-				        class="w-32 h-32 rounded-lg cursor-pointer hover:opacity-50 transition-all delay-75"
-				        :src="item.url"
-				        :class="{'scale-110 outline': item === selectedAsset && !item?.progress > 0, 'opacity-50': item?.progress > 0, 'scale-110': item.url === hoverAsset}"
-				        @click="setAsset(item)"
-				        alt="image"
-			        >
+							<transition name="show">
+								<div v-show="hoverAsset === item.url && !item?.isLoading" class="absolute top-[-6px] right-[-6px]">
+									<button class="btn btn-square btn-outline btn-xs btn-error"
+									        @click="showModal('delete', 'Вы действительно хотите удалить?', item, ['Отменить', 'Удалить'])">
+										<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+									</button>
+								</div>
+							</transition>
 
-			        <transition name="show">
-				        <div v-show="hoverAsset === item.url && !item?.isLoading" class="absolute top-[-6px] right-[-6px]">
-					        <button class="btn btn-square btn-outline btn-xs btn-error"
-					                @click="showModal('delete', 'Вы действительно хотите удалить?', item, ['Отменить', 'Удалить'])">
-						        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-					        </button>
-				        </div>
-			        </transition>
+						</div>
 
-		        </div>
+						<div v-if="item?.progress > 0"
+						     class="absolute left-0 bottom-0 rounded-lg w-full bg-[#00A872] transition-all delay-75"
+						     :style="{height: item?.progress + '%'}"
+						>
+							<p class="absolute left-0 bottom-0 flex justify-center items-center text-white w-32 h-32">
+								{{item?.progress.toFixed()}}%
+							</p>
+						</div>
 
-		        <div v-if="item?.progress > 0"
-		             class="absolute left-0 bottom-0 rounded-lg w-full bg-[#00A872] transition-all delay-75"
-		             :style="{height: item?.progress + '%'}"
-		        >
-			        <p class="absolute left-0 bottom-0 flex justify-center items-center text-white w-32 h-32">
-				        {{item?.progress.toFixed()}}%
-			        </p>
-		        </div>
+						<div v-if="item?.isLoading" class="absolute left-0 flex justify-between items-center w-full h-10 mt-3">
+							<button v-if="item?.progress === 0"
+							        class="btn btn-outline btn-success btn-sm w-[70%]"
+							        @click="showModal('download', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
+							>
+								Загрузить
+							</button>
+							<button v-else-if="item?.progress > 0 && item?.progress < 100" class="btn btn-outline btn-success btn-sm w-[70%]">
+								<span class="loading loading-spinner text-success"></span>
+							</button>
+							<button v-if="item?.progress === 100" class="btn btn-outline btn-success btn-sm w-[70%] disabled">
+								<SuccessIcon />
+							</button>
+							<button class="btn btn-square btn-outline btn-error btn-sm" @click="deleteLocalAsset(item)">
+								<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+							</button>
+						</div>
 
-		        <div v-if="item?.isLoading" class="absolute left-0 flex justify-between items-center w-full h-10 mt-3">
-			        <button v-if="item?.progress === 0"
-			                class="btn btn-outline btn-success btn-sm w-[70%]"
-			                @click="showModal('download', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
-			        >
-				        Загрузить
-			        </button>
-			        <button v-else-if="item?.progress > 0 && item?.progress < 100" class="btn btn-outline btn-success btn-sm w-[70%]">
-				        <span class="loading loading-spinner text-success"></span>
-			        </button>
-			        <button v-if="item?.progress === 100" class="btn btn-outline btn-success btn-sm w-[70%] disabled">
-				        <SuccessIcon />
-			        </button>
-			        <button class="btn btn-square btn-outline btn-error btn-sm" @click="deleteLocalAsset(item)">
-				        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-			        </button>
-		        </div>
+					</div>
+				</swiper-slide>
 
-	        </div>
-        </swiper-slide>
-
-	    <swiper-slide class="swiper-slide w-36 h-36">
-		    <div class="w-32 h-32"></div>
-	    </swiper-slide>
-    </swiper>
+				<swiper-slide
+					class="swiper-slide"
+					v-if="assets.length"
+				>
+					<div class="w-32 h-32"></div>
+				</swiper-slide>
+			</swiper>
+		</Transition>
+	</div>
 
 	<ModalConfirm v-if="modal.show">
 		<template v-slot:header>
@@ -250,6 +280,8 @@ const getStyle = (element, type) =>
 .swiper {
     width: 100%;
     height: 100%;
+	padding-top: 25px;
+	padding-bottom: 50px;
 }
 
 .swiper-slide {
@@ -263,10 +295,19 @@ const getStyle = (element, type) =>
 	transition: scale 0.3s ease-in-out;
 	transition-delay: 0.2s;
 }
-
 .show-enter-from,
 .show-leave-to {
 	transition-delay: 0s;
+	scale: 0;
+}
+
+.showSpoiler-enter-active,
+.showSpoiler-leave-active  {
+	transition: all 0.5s ease-in-out;
+}
+.showSpoiler-enter-from,
+.showSpoiler-leave-to {
+	transform: translateY(-150px);
 	scale: 0;
 }
 </style>

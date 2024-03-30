@@ -1,0 +1,303 @@
+:root[data-theme=dark]
+{
+  --color-text: rgba(235, 235, 235, 0.64);
+
+  --color-navbar: #181818;
+  --color-navbar-text: white;
+  --color-navbar-svg-fill: rgb(131, 128, 128);
+
+  --color-body-background: rgb(29, 29, 29);
+  --color-main-background: rgb(19, 20, 22);
+  --color-second-background: rgb(42, 42, 42);
+  --color-main-header-border: rgb(0, 0, 0);
+  --color-dialog-background: #181818;
+
+  --color-table-hover: rgb(14, 14, 14);
+  --color-table-header-text: rgb(156, 163, 175);
+  --color-table-header-background: #181818;
+  --color-table-body-background: #181818;
+  --color-table-input-background: #181818;
+
+  --color-portfolio-badge-background: #181818;
+  --color-portfolio-badge-text: rgb(148, 140, 140);
+  --color-portfolio-stats-background: #181818;
+
+  --color-pagination-background: #131313;
+  --color-pagination-hover: #191919;
+  --color-pagination-active: #191919;
+  --color-pagination-text: white;
+
+  --color-dropdown-background: rgb(40, 40, 40);
+  --color-dropdown-text: white;
+  --color-dropdown-hover: rgb(107, 105, 105);
+  --color-dropdown-active: rgb(131, 128, 128);
+
+  --color-selection: #b6b6b6;
+
+  --color-scroll-track: #191919;
+  --color-scroll-thumb: #121212;
+
+  --color-tooltip-background: rgb(134, 38, 38);
+  --color-tooltip-text: white;
+  /* ... */
+}
+
+[data-theme=dark]
+{
+  .bg-main {
+    background-color: rgb(31 41 55);
+  }
+
+  .hover\:bg-main:hover {
+    background-color: rgb(31 41 55);
+  }
+
+  .bg-second {
+    @apply bg-gray-900;
+  }
+
+  .bg-input {
+    background-color: #262626;
+  }
+
+  .color-input {
+    @apply border-black text-[#b6b7b9] focus:border-[#96969b];
+    @extend .bg-input;
+  }
+
+  .text-main {
+    color: white;
+  }
+
+  .header-border-color {
+    border-color: var(--color-main-header-border);
+  }
+
+  .border-color {
+    border-color: black;
+  }
+
+  .custom-input
+  {
+    @apply w-full rounded-md border py-3 px-6 text-base font-medium outline-none focus:shadow-md h-12;
+    @extend .color-input;
+  }
+
+  .input-group-rounded {
+    @apply rounded-r-none;
+  }
+
+  .auth-button {
+    @apply btn focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    @apply text-main bg-[#303030] focus:bg-[#252525] hover:bg-[#252525];
+  }
+
+  .selected-file-list
+  {
+    .header {
+      @apply text-main bg-navbar;
+    }
+
+    .body {
+      @apply text-main bg-main-background;
+    }
+
+    @apply btn focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    @apply text-main bg-[#303030] focus:bg-[#252525] hover:bg-[#252525];
+  }
+
+  //background-image: url(https://e1.pxfuel.com/desktop-wallpaper/306/858/desktop-wallpaper-gabe-newell-1600x900-px-gabe-newell.jpg);
+}
+
+:root[data-theme=dark_blue]
+{
+  --color-text: rgba(235, 235, 235, 0.64);
+
+  --color-navbar: rgb(17, 24, 39);
+  --color-navbar-text: white;
+  --color-navbar-svg-fill: rgb(131, 128, 128);
+
+  --color-body-background: #181818;
+  --color-main-background: rgb(17, 24, 39);
+  --color-second-background: rgb(31, 41, 55);
+  --color-main-header-border: rgb(55, 65, 81);
+  --color-dialog-background: rgb(31, 41, 55);
+
+  --color-table-hover: rgb(39, 39, 42);
+  --color-table-header-text: rgb(156, 163, 175);
+  --color-table-header-background: rgb(31, 41, 55);
+  --color-table-body-background: var(--color-body-background);
+  --color-table-input-background: #181818;
+
+  --color-portfolio-badge-background: rgb(31, 41, 55);
+  --color-portfolio-badge-text: rgb(96, 165, 250);
+  --color-portfolio-stats-background: rgb(31, 41, 55);
+
+  --color-pagination-background: #131313;
+  --color-pagination-hover: #191919;
+  --color-pagination-active: #191919;
+  --color-pagination-text: white;
+
+  --color-dropdown-background: rgb(31, 38, 51);
+  --color-dropdown-text: white;
+  --color-dropdown-hover: #161616;
+  --color-dropdown-active: #262626;
+
+  --color-selection: #b6b6b6;
+
+  --color-scroll-track: #262626;
+  --color-scroll-thumb: #161616;
+
+  --color-tooltip-background: rgb(134, 38, 38);
+  --color-tooltip-text: white;
+  /* ... */
+}
+
+[data-theme=dark_blue]
+{
+  .bg-main {
+    background-color: rgb(31 41 55);
+  }
+
+  .hover\:bg-main:hover {
+    background-color: rgb(31 41 55);
+  }
+
+  .bg-second {
+    @apply bg-gray-900;
+  }
+
+  .bg-input {
+    background-color: rgb(55 65 81);
+  }
+
+  .color-input {
+    @apply border-gray-600 text-white focus:border-blue-500;
+    @extend .bg-input;
+  }
+
+  .text-main {
+    color: white;
+  }
+
+  .header-border-color {
+    border-color: var(--color-main-header-border);
+  }
+
+  .border-color {
+    border-color: rgb(75 85 99);
+  }
+
+  .custom-input
+  {
+    @apply w-full rounded-md border py-3 px-6 text-base font-medium outline-none focus:shadow-md h-12;
+    @extend .color-input;
+  }
+
+  .input-group-rounded {
+    @apply rounded-r-none;
+  }
+
+  .auth-button {
+    @apply btn focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    @apply text-main bg-[#344366] focus:bg-[#253049] hover:bg-[#253049];
+  }
+}
+
+:root[data-theme=light_cream]
+{
+  //--color-text: rgba(60, 60, 60, 0.66);
+  --color-text: rgb(70, 69, 69);
+
+  --color-navbar: /*#eee7d8;*/#e0d6c8;
+  --color-navbar-text: black;
+  --color-navbar-svg-fill: rgb(159, 90, 5);
+
+  --color-body-background: #E7E7E7;
+  --color-main-background: #e0d6c8;
+  --color-second-background: /*#e0d6c8;*/#eee7d8;
+  --color-main-header-border: rgb(200, 190, 174);
+  --color-dialog-background: #e0d6c8;
+
+  //--color-table-hover: #d8d8d5;
+  --color-table-hover: #c7c6c6;
+  --color-table-header-text: rgb(99, 92, 80);
+  --color-table-header-background: #eee7d8;
+  --color-table-body-background: var(--color-body-background);
+  --color-table-input-background: var(--color-body-background);
+
+  --color-portfolio-badge-background: rgb(224, 214, 200);
+  --color-portfolio-badge-text: rgb(159, 90, 5);
+  --color-portfolio-stats-background: #eee7d8;
+
+  --color-pagination-background: #c7c6c6;
+  --color-pagination-hover: #b6b6b6;
+  --color-pagination-active: #b6b6b6;
+  --color-pagination-text: black;
+
+  --color-dropdown-background: rgb(240, 240, 239);
+  --color-dropdown-text: black;
+  --color-dropdown-hover: rgb(99, 92, 80);
+  --color-dropdown-active: rgb(99, 92, 80);
+
+  --color-selection: #606ca3;
+
+  --color-scroll-track: var(--color-table-hover);
+  --color-scroll-thumb: #b6b6b6;
+
+  --color-tooltip-background: rgb(134, 38, 38);
+  --color-tooltip-text: white;
+  /* ... */
+}
+
+[data-theme=light_cream]
+{
+  .bg-main {
+    background-color: #e0d6c8;
+  }
+
+  .hover\:bg-main:hover {
+    background-color: #e0d6c8;
+  }
+
+  .bg-second {
+    background-color: #eee7d8;
+  }
+
+  .bg-input {
+    background-color: #c8beae;
+  }
+
+  .color-input {
+    @apply border-[#b4aa9c] bg-[#c8beae] text-black focus:border-blue-500;
+    @extend .bg-input;
+  }
+
+  .text-main {
+    color: black;
+  }
+
+  .header-border-color {
+    border-color: var(--color-main-header-border);
+  }
+
+  .border-color {
+    border-color: #b4aa9c;
+  }
+
+  .custom-input
+  {
+    @apply w-full rounded-md border py-3 px-6 text-base font-medium outline-none focus:shadow-md h-12;
+    @extend .color-input;
+  }
+
+  .input-group-rounded {
+    @apply rounded-r-none;
+  }
+
+  .auth-button {
+    @apply btn focus:ring-0 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center;
+    @apply text-black bg-[#c8beae] focus:bg-[#b4aa9c] hover:bg-[#b4aa9c] hover:border-[#8d8d8a];
+    border-color: #b4aa9c;
+  }
+}
