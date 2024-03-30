@@ -65,18 +65,6 @@ const currentRoute = computed(() => menuItems.value.filter((item) => item.route 
 		        <div class="text-[24px] text-main py-2">{{ $t(`settings.headers.${currentRoute.name}`) }}</div>
 		        <div class="w-full rounded-3xl h-1 bg-black opacity-25 mt-2"></div>
 		        <router-view></router-view>
-		        <div class="flex justify-end items-center w-full mr-24 mb-6">
-			        <button
-				        class="bg-second-background hover:opacity-75 active:scale-90 py-3 px-7 rounded-xl mr-2 text-white"
-			        >
-				        {{ $t('settings.footers.actions.cansel') }}
-			        </button>
-			        <button
-				        class="bg-green-600 hover:opacity-75 active:scale-90 py-3 px-7 rounded-xl ml-2 text-white"
-			        >
-				        {{ $t('settings.footers.actions.save') }}
-			        </button>
-		        </div>
 	        </div>
         </div>
     </div>

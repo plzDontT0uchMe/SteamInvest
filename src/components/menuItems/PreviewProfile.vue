@@ -1,6 +1,7 @@
 <script setup>
 
 import {computed} from "vue";
+import UserAvatar from "@/components/UserAvatar.vue";
 
 const props = defineProps({
 	avatar: {
@@ -38,7 +39,7 @@ const backgroundBG = computed(() => {
 			<div
 				v-if="avatar === undefined"
 			>
-				{{ user?.nametag.trim().toUpperCase()[0] }}
+				<UserAvatar class="w-[77px] h-[77px]" :user="{ nametag : 'User', avatar : avatar }" />
 			</div>
 		</div>
 	</div>
