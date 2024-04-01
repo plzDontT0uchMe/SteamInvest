@@ -63,7 +63,7 @@ const currentRoute = computed(() => menuItems.value.filter((item) => item.route 
             </ul>
 	        <div class="flex flex-col items-center w-[75%] bg-navbar rounded-xl">
 		        <div class="text-[24px] text-main py-2">{{ $t(`settings.headers.${currentRoute.name}`) }}</div>
-		        <div class="w-full rounded-3xl h-1 bg-black opacity-25 mt-2"></div>
+		        <div class="w-[80%] h-[2px] rounded-3xl bg-black opacity-25 mt-2"></div>
 		        <router-view></router-view>
 	        </div>
         </div>

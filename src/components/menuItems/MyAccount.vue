@@ -39,7 +39,7 @@ const selectedBackground = ref(undefined)
 <template>
 	<div
 		v-if="isAssetsReady"
-		class="flex flex-col justify-center items-center w-full"
+		class="flex flex-col justify-center items-center w-full my-6"
 	>
 		<MyAccountSpoiler
 			:header="$t('settings.body.my_account.avatars')"
@@ -58,7 +58,7 @@ const selectedBackground = ref(undefined)
 			:background="selectedBackground?.url"
 		/>
 		<div
-			class="flex justify-end items-center w-full mr-24 mb-6">
+			class="flex justify-end items-center w-full mr-24">
 			<button
 				class="bg-second-background hover:opacity-75 active:scale-90 py-3 px-7 rounded-xl mr-2 text-white"
 			>

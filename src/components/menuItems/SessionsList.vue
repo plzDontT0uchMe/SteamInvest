@@ -15,8 +15,8 @@ const assets = defineModel('assets', {
 </script>
 
 <template>
-<div class="flex flex-col justify-between items-center w-[70%]">
-	<div class="text-[24px] text-main mt-6 ml-6 cursor-pointer select-none">
+<div class="flex flex-col justify-between items-center w-full">
+	<div class="text-[24px] text-main cursor-pointer select-none">
 		{{ name }}
 	</div>
 	<div class="w-full max-h-[300px] overflow-y-auto">

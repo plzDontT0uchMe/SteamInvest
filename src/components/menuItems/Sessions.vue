@@ -72,14 +72,12 @@ const assets = ref({
 
 const isAssetsReady = ref(true);
 
-console.log(assets.value)
-
 </script>
 
 <template>
 	<div
 		v-if="isAssetsReady"
-		class="flex flex-col justify-center items-center w-full mb-6"
+		class="flex flex-col justify-center items-center w-[80%] my-6"
 	>
 		<SessionsList
 			name="Текущая сессия"
