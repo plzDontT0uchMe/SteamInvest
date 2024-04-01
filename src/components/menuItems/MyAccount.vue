@@ -8,14 +8,19 @@ const assets = ref(null);
 const isAssetsReady = ref(false);
 
 const getAssets = (async () => {
+	isAssetsReady.value = false;
     try{
         const resp = await axios.get('/api/user/assets');
-	    if(!resp?.data?.success) throw Error('Ошибка!');
-        assets.value = resp['data']['data'];
-        isAssetsReady.value = true;
+	    if(resp?.data?.success)
+		    assets.value = resp['data']['data'];
+	    else
+		    throw Error('Ошибка!');
     }
     catch (e){
         console.log(e);
+    }
+	finally {
+	    isAssetsReady.value = true;
     }
 })
 

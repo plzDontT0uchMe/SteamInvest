@@ -26,8 +26,8 @@ const props = defineProps({
 			<div>{{item.dateCurrent}}</div>
 		</div>
 		<div class="flex justify-between items-center w-full">
-			<div class="tooltip" data-tip="Созданное IP">{{item.ipCreate}}</div>
-			<div>{{item.dateCreate}}</div>
+			<div class="tooltip" data-tip="Созданное IP">{{item?.ipCreate}}</div>
+			<div>{{item?.dateCreate}}</div>
 		</div>
 	</div>
 </div>

@@ -10,6 +10,7 @@ import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
 import axios from "@/axios/index.js";
 import ModalConfirm from "@/components/ModalConfirm.vue";
 import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
+import ErrorIcon from "@/components/menuIcons/ErrorIcon.vue";
 
 const props = defineProps({
     header: {
@@ -42,53 +43,59 @@ const setSelectedAsset = (item) => {
 }
 
 const loadAsset = (event) => {
-	const file = event.target.files[0];
-	const asset = {
-		url: URL.createObjectURL(file),
-		file: file,
-		isLoading: true,
-		progress: 0
+	let file = null;
+	if(event.type === 'change')
+		file = event.target.files[0];
+	else {
+		isDragAsset.value = false;
+		file = event.dataTransfer.files[0];
 	}
-	assets.value.unshift(asset);
-	myFile.value.value = ''
-}
-const dropAsset = (event) => {
-	isDragAsset.value = false;
-	const file = event.dataTransfer.files[0];
+	if(!file) // Если файл не выбран
+		return;
 	const asset = {
 		url: URL.createObjectURL(file),
 		file: file,
 		isLoading: true,
-		progress: 0
+		progress: 0,
+		isError: false
 	}
 	assets.value.unshift(asset);
 	myFile.value.value = ''
 }
 const deleteLocalAsset = (asset) => {
-	URL.revokeObjectURL(asset.url);
 	assets.value = assets.value.filter((item) => item.url !== asset.url);
 }
 const deleteAsset = async (asset) => {
 	try{
 		const resp = await axios.delete(`/api/user/assets/${asset.id}`);
-		if(!resp?.data?.success) throw Error('Ошибка!');
-		assets.value = resp.data.data[props.type];
+		if(resp?.data?.success)
+			assets.value = resp.data.data[props.type];
+		else
+			throw Error('Ошибка удаления!');
 	}
 	catch (e){
 		console.log(e);
 	}
 }
-const downloadAsset = async (asset) => {
+const uploadAsset = async (asset) => {
 	const data = new FormData();
 	data.append('asset', asset.file);
 	data.append('type', props.type);
-	try{
+	asset.isError = false;
+	try {
+		//asset.isError = true;
+		//throw Error('Ошибка загрузки!');
 		const resp = await axios.post('/api/user/assets', data, {
 			onUploadProgress: progressEvent => asset.progress = progressEvent.progress * 100
 		});
-		assets.value = resp.data.data[props.type];
+		if(resp?.data?.success)
+			assets.value = resp.data.data[props.type];
+		else {
+			asset.isError = true;
+			throw Error('Ошибка загрузки!');
+		}
 	}
-	catch (e){
+	catch (e) {
 		console.log(e);
 	}
 }
@@ -116,8 +123,8 @@ const modalAction = (async () => {
 			await deleteAsset(modal.value.body)
 			break;
 		}
-		case 'download':{
-			await downloadAsset(modal.value.body)
+		case 'upload':{
+			await uploadAsset(modal.value.body)
 			break;
 		}
 	}
@@ -126,7 +133,7 @@ const getStyle = (element, type) =>
 {
 	const styles = {
 		'button': {
-			'download' : 'bg-green-600 hover:bg-green-700',
+			'upload' : 'bg-green-600 hover:bg-green-700',
 			'delete' : 'bg-red-600 hover:bg-red-700'
 		}
 	};
@@ -136,7 +143,6 @@ const getStyle = (element, type) =>
 const isActiveSpoiler = ref(true);
 
 const activeTheme = computed(() => {
-	console.log(document.querySelector('html').getAttribute('data-theme'))
 	return document.querySelector('html').getAttribute('data-theme')
 });
 
@@ -169,7 +175,7 @@ const activeTheme = computed(() => {
 						:class="{'opacity-50 scale-110 border-dashed': isDragAsset}"
 						draggable="true"
 						@click="myFile.click"
-						@drop.prevent="dropAsset"
+						@drop.prevent="loadAsset"
 						@dragover.prevent="isDragAsset = true"
 						@dragleave.prevent="isDragAsset = false"
 					>
@@ -184,15 +190,20 @@ const activeTheme = computed(() => {
 				>
 					<div class="relative">
 
-						<div @mouseover="hoverAsset === null ? hoverAsset = item.url : hoverAsset" @mouseleave="hoverAsset = null">
+						<div class="relative flex justify-center items-center"
+						     @mouseover="hoverAsset === null ? hoverAsset = item.url : hoverAsset"
+						     @mouseleave="hoverAsset = null"
+						>
 
 							<img
 								class="w-32 h-32 rounded-lg cursor-pointer hover:opacity-50 transition-all delay-75"
 								:src="item.url"
-								:class="{'scale-110 outline': item === selectedAsset && !item?.progress > 0, 'opacity-50': item?.progress > 0, 'scale-110': item.url === hoverAsset}"
+								:class="{'scale-110 outline': item === selectedAsset && !item?.progress > 0, 'opacity-50': item?.progress > 0 || item?.isError, 'scale-110': item.url === hoverAsset && !item?.isError, 'outline outline-[red]' : item?.isError}"
 								@click="setSelectedAsset(item)"
 								alt="image"
 							>
+
+							<ErrorIcon v-if="item?.isError" class="absolute w-8 h-8"/>
 
 							<transition name="show">
 								<div v-show="hoverAsset === item.url && !item?.isLoading" class="absolute top-[-6px] right-[-6px]">
@@ -217,7 +228,7 @@ const activeTheme = computed(() => {
 						<div v-if="item?.isLoading" class="absolute left-0 flex justify-between items-center w-full h-10 mt-3">
 							<button v-if="item?.progress === 0"
 							        class="btn btn-outline btn-success btn-sm w-[70%]"
-							        @click="showModal('download', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
+							        @click="showModal('upload', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
 							>
 								Загрузить
 							</button>

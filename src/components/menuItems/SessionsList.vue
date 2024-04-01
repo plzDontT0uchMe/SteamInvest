@@ -1,6 +1,5 @@
 <script setup>
 
-import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
 import SessoinsItem from "@/components/menuItems/SessoinsItem.vue";
 
 const props = defineProps({
