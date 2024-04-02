@@ -25,7 +25,7 @@ const isHover = ref(false);
 	</div>
 	<div class="flex flex-col w-full pl-4">
 		<div class="text-main">{{ item?.browser }}</div>
-		<div class="relative flex justify-between items-center">
+		<div class="flex justify-between items-center">
 			<div class="flex flex-col">
 				<div class="tooltip" data-tip="Текущее IP">{{ item?.ipCurrent }}</div>
 				<div class="tooltip" data-tip="Созданное IP">{{ item?.ipCreate }}</div>
@@ -34,10 +34,10 @@ const isHover = ref(false);
 				<div>{{ item?.dateCurrent }}</div>
 				<div>{{ item?.dateCreate }}</div>
 			</div>
-			<div class="cursor-pointer" v-else>
-				<ErrorIcon class="absolute top-0 right-0 w-6 h-6"/>
-			</div>
 		</div>
+	</div>
+	<div class="cursor-pointer " v-if="isHover">
+		<ErrorIcon class="w-full h-full"/>
 	</div>
 </div>
 </template>

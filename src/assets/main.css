@@ -9,3 +9,17 @@
     background-color: var(--color-body-background);
     color: var(--color-text);
 }
+
+*::-webkit-scrollbar {
+    width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: var(--color-scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 14px;
+    background-color: var(--color-scroll-thumb);
+}

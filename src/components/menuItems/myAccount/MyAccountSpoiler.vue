@@ -151,7 +151,7 @@ const activeTheme = computed(() => {
 <template>
 	<input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" hidden @change="loadAsset">
 	<div class="flex flex-col justify-center items-center w-full">
-		<div class="text-[24px] text-main cursor-pointer select-none flex justify-center items-center" @click="isActiveSpoiler = !isActiveSpoiler">
+		<div class="text-[24px] text-main cursor-pointer select-none flex justify-center items-center mb-6" @click="isActiveSpoiler = !isActiveSpoiler">
 			{{ header }}
 			<ArrowIcon class="w-4 h-4 ml-2 mt-1 transition-all duration-500" :class="isActiveSpoiler ? 'rotate-[90deg]' : 'rotate-[-90deg]'"/>
 		</div>
@@ -291,8 +291,8 @@ const activeTheme = computed(() => {
 .swiper {
     width: 100%;
     height: 100%;
-	padding-top: 25px;
-	padding-bottom: 50px;
+	padding-top: 10px;
+	padding-bottom: 25px;
 }
 
 .swiper-slide {

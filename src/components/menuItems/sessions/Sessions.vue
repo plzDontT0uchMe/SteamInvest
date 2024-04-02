@@ -2,12 +2,27 @@
 
 import {ref} from "vue";
 import axios from "@/axios/index.js";
-import SessionsList from "@/components/menuItems/SessionsList.vue";
+import SessionsList from "@/components/menuItems/sessions/SessionsList.vue";
+import ExitIcon from "@/components/menuIcons/ExitIcon.vue";
+
+//city and country under browser
 
 const assets = ref({
-	'current': [
+	'current':
+	{
+		'id': 1,
+		'browser': 'Chrome',
+		'city': 'Moscow',
+		'country': 'Russia',
+		'type': 'pc',
+		'create_ip': '192.0.0.1',
+		'current_ip': '128.0.0.1',
+		'create_date': '2021-10-10 10:10:10',
+		'current_date': '2021-10-10 10:10:10'
+	},
+	'active': [
 		{
-			'id': 1,
+			'id': 2,
 			'browser': 'Chrome',
 			'type': 'pc',
 			'ipCreate': '192.0.0.1',
@@ -15,10 +30,17 @@ const assets = ref({
 			'dateCreate': '2021-10-10 10:10:10',
 			'dateCurrent': '2021-10-10 10:10:10'
 		},
-	],
-	'active': [
 		{
-			'id': 2,
+			'id': 3,
+			'browser': 'Chrome',
+			'type': 'mobile',
+			'ipCreate': '192.0.0.1',
+			'ipCurrent': '128.0.0.1',
+			'dateCreate': '2021-10-10 10:10:10',
+			'dateCurrent': '2021-10-10 10:10:10'
+		},
+		{
+			'id': 4,
 			'browser': 'Chrome',
 			'type': 'pc',
 			'ipCreate': '192.0.0.1',
@@ -77,7 +99,7 @@ const isAssetsReady = ref(true);
 <template>
 	<div
 		v-if="isAssetsReady"
-		class="flex flex-col justify-center items-center w-[80%] my-6"
+		class="flex flex-col justify-center items-center w-full my-6"
 	>
 		<SessionsList
 			name="Текущая сессия"
@@ -86,7 +108,13 @@ const isAssetsReady = ref(true);
 		<SessionsList
 			name="Активные сессии"
 			v-model:assets="assets.active"
-		/>
+		>
+			<template #afterHeader>
+				<div class="tooltip" data-tip="Завершить все сессии, кроме текущей">
+					<ExitIcon class="w-6 h-6 ml-2 mt-1" />
+				</div>
+			</template>
+		</SessionsList>
 		<SessionsList
 			name="История сессий"
 			v-model:assets="assets.history"

@@ -1,8 +1,9 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import axios from "@/axios";
-import MyAccountSpoiler from "@/components/menuItems/MyAccountSpoiler.vue";
-import PreviewProfile from "@/components/menuItems/PreviewProfile.vue";
+import axios from "@/axios/index.js";
+import MyAccountSpoiler from "@/components/menuItems/myAccount/MyAccountSpoiler.vue";
+import PreviewProfile from "@/components/menuItems/myAccount/PreviewProfile.vue";
+import MenuButtons from "@/components/menuItems/MenuButtons.vue";
 
 const assets = ref(null);
 const isAssetsReady = ref(false);
@@ -30,8 +31,6 @@ onMounted(() => {
 
 const selectedAvatar = ref(undefined)
 
-watch(() => selectedAvatar.value, () => console.log(selectedAvatar.value))
-
 const selectedBackground = ref(undefined)
 
 </script>
@@ -57,19 +56,7 @@ const selectedBackground = ref(undefined)
 			:avatar="selectedAvatar?.url"
 			:background="selectedBackground?.url"
 		/>
-		<div
-			class="flex justify-end items-center w-full mr-24">
-			<button
-				class="bg-second-background hover:opacity-75 active:scale-90 py-3 px-7 rounded-xl mr-2 text-white"
-			>
-				{{ $t('settings.footers.actions.cansel') }}
-			</button>
-			<button
-				class="bg-green-600 hover:opacity-75 active:scale-90 py-3 px-7 rounded-xl ml-2 text-white"
-			>
-				{{ $t('settings.footers.actions.save') }}
-			</button>
-		</div>
+		<MenuButtons />
 	</div>
 	<span v-else class="loading loading-spinner w-20 m-auto flex justify-center items-center"></span>
 </template>

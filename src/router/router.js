@@ -18,27 +18,27 @@ const router = createRouter({
                 {
                     path: 'my-account',
                     name: 'my-account',
-                    component: () => import("@/components/menuItems/MyAccount.vue")
+                    component: () => import("@/components/menuItems/myAccount/MyAccount.vue")
                 },
                 {
                     path: 'api-keys',
                     name: 'api-keys',
-                    component: () => import("@/components/menuItems/ApiKeys.vue")
+                    component: () => import("@/components/menuItems/apiKeys/ApiKeys.vue")
                 },
                 {
                     path: 'sessions',
                     name: 'sessions',
-                    component: () => import("@/components/menuItems/Sessions.vue")
+                    component: () => import("@/components/menuItems/sessions/Sessions.vue")
                 },
                 {
                     path: 'socials',
                     name: 'socials',
-                    component: () => import("@/components/menuItems/Socials.vue")
+                    component: () => import("@/components/menuItems/socials/Socials.vue")
                 },
                 {
                     path: 'tariffs',
                     name: 'tariffs',
-                    component: () => import("@/components/menuItems/Tariffs.vue")
+                    component: () => import("@/components/menuItems/tariffs/Tariffs.vue")
                 },
                 {
                     path: 'friends',
