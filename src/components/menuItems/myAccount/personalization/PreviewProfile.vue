@@ -23,7 +23,7 @@ const backgroundBG = computed(() => {
 </script>
 
 <template>
-<div class="text-[24px] text-main mb-6 cursor-pointer select-none flex justify-center items-center">
+<div class="text-[20px] text-main mb-6 cursor-pointer select-none flex justify-center items-center">
 	{{ $t('settings.body.my_account.preview') }}
 </div>
 <div class="flex flex-col items-center w-full bg-second-background mb-6 rounded-xl">

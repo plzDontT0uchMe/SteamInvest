@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import SuccessIcon from "@/components/menuIcons/SuccessIcon.vue";
 import axios from "@/axios/index.js";
-import ModalConfirm from "@/components/ModalConfirm.vue";
+import Modal from "@/components/Modal.vue";
 import ArrowIcon from "@/components/menuIcons/ArrowIcon.vue";
 import ErrorIcon from "@/components/menuIcons/ErrorIcon.vue";
 
@@ -77,6 +77,7 @@ const deleteAsset = async (asset) => {
 		console.log(e);
 	}
 }
+
 const uploadAsset = async (asset) => {
 	const data = new FormData();
 	data.append('asset', asset.file);
@@ -105,53 +106,52 @@ const modal = ref({
 	action: null,
 	header: null,
 	body: null,
-	footer: null
+	footer: null,
 });
-const showModal = (action, header, body, footer) => {
+
+const modalShow = (action, header, body, footer) => {
 	modal.value = {
 		show: true,
 		action: action,
 		header: header,
 		body: body,
 		footer: footer
-	}
+	};
 }
+
 const modalAction = (async () => {
 	modal.value.show = false;
 	switch (modal.value.action){
-		case 'delete':{
+		case 'deleteAsset':{
 			await deleteAsset(modal.value.body)
 			break;
 		}
-		case 'upload':{
+		case 'uploadAsset':{
 			await uploadAsset(modal.value.body)
 			break;
 		}
 	}
 })
+
+const isActiveSpoiler = ref(true);
+
 const getStyle = (element, type) =>
 {
 	const styles = {
 		'button': {
-			'upload' : 'bg-green-600 hover:bg-green-700',
-			'delete' : 'bg-red-600 hover:bg-red-700'
+			'uploadAsset' : 'bg-green-600 hover:bg-green-700',
+			'deleteAsset' : 'bg-red-600 hover:bg-red-700'
 		}
 	};
 	return styles[element][type];
 }
-
-const isActiveSpoiler = ref(true);
-
-const activeTheme = computed(() => {
-	return document.querySelector('html').getAttribute('data-theme')
-});
 
 </script>
 
 <template>
 	<input type="file" ref="myFile" accept="image/png, image/jpeg, image/gif" hidden @change="loadAsset">
 	<div class="flex flex-col justify-center items-center w-full">
-		<div class="text-[24px] text-main cursor-pointer select-none flex justify-center items-center mb-6" @click="isActiveSpoiler = !isActiveSpoiler">
+		<div class="text-[20px] text-main cursor-pointer select-none flex justify-center items-center" @click="isActiveSpoiler = !isActiveSpoiler">
 			{{ header }}
 			<ArrowIcon class="w-4 h-4 ml-2 mt-1 transition-all duration-500" :class="isActiveSpoiler ? 'rotate-[90deg]' : 'rotate-[-90deg]'"/>
 		</div>
@@ -208,7 +208,8 @@ const activeTheme = computed(() => {
 							<transition name="show">
 								<div v-show="hoverAsset === item.url && !item?.isLoading" class="absolute top-[-6px] right-[-6px]">
 									<button class="btn btn-square btn-outline btn-xs btn-error"
-									        @click="showModal('delete', 'Вы действительно хотите удалить?', item, ['Отменить', 'Удалить'])">
+									        @click="modalShow('deleteAsset', 'Вы действительно хотите удалить?', item, ['Отменить', 'Удалить'])"
+									>
 										<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
 									</button>
 								</div>
@@ -228,7 +229,7 @@ const activeTheme = computed(() => {
 						<div v-if="item?.isLoading" class="absolute left-0 flex justify-between items-center w-full h-10 mt-3">
 							<button v-if="item?.progress === 0"
 							        class="btn btn-outline btn-success btn-sm w-[70%]"
-							        @click="showModal('upload', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
+							        @click="modalShow('uploadAsset', 'Вы действительно хотите загрузить?', item, ['Отменить', 'Загрузить'])"
 							>
 								Загрузить
 							</button>
@@ -256,7 +257,7 @@ const activeTheme = computed(() => {
 		</Transition>
 	</div>
 
-	<ModalConfirm v-if="modal.show">
+	<Modal v-if="modal.show">
 		<template v-slot:header>
 			<div class="flex justify-center items-center text-xl mb-6">
 				<p>{{ modal.header }}</p>
@@ -270,29 +271,29 @@ const activeTheme = computed(() => {
 		<template v-slot:footer>
 			<div class="flex justify-center items-center">
 				<button
-					class="bg-gray-500 p-2 rounded-xl mr-2 text-white"
+					class="bg-gray-500 p-2 rounded-xl mr-2 text-white w-24"
 					@click="modal.show = false"
 				>
 					{{ modal.footer[0] }}
 				</button>
 				<button
-					class="bg-gray-500 p-2 rounded-xl ml-2 text-white"
-					@click="modalAction"
+					class="bg-gray-500 p-2 rounded-xl ml-2 text-white w-24"
 					:class="getStyle('button', modal.action)"
+					@click="modalAction"
 				>
-					{{ modal.footer[1] }}
+				{{ modal.footer[1] }}
 				</button>
 			</div>
 		</template>
-	</ModalConfirm>
+	</Modal>
 </template>
 
 <style scoped>
 .swiper {
     width: 100%;
     height: 100%;
-	padding-top: 10px;
-	padding-bottom: 25px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .swiper-slide {

@@ -5,7 +5,7 @@ import axios from "@/axios/index.js";
 import CustomInput from "@/components/CustomInput.vue";
 import MenuButtons from "@/components/menuItems/MenuButtons.vue";
 
-const assets = ref([
+const items = ref([
 	{
 		id: 1,
 		name: 'Market 1',
@@ -33,35 +33,35 @@ const assets = ref([
 	}
 ]);
 
-const copyAssets = ref([])
+const copyItems = ref([])
 
 onMounted(() => {
 	try{
-		copyAssets.value = JSON.parse(JSON.stringify(assets.value));
+		copyItems.value = JSON.parse(JSON.stringify(items.value));
 	} catch (e) {
-		copyAssets.value = [];
+		copyItems.value = [];
 		console.log(e)
 	}
 })
 
-const isAssetsReady = ref(true);
+const isItemsReady = ref(true);
 
 const isChange = computed(() => {
-	return JSON.stringify(assets.value) !== JSON.stringify(copyAssets.value);
+	return JSON.stringify(items.value) !== JSON.stringify(copyItems.value);
 });
 
 </script>
 
 <template>
 	<div
-		v-if="isAssetsReady"
+		v-if="isItemsReady"
 		class="flex flex-col justify-center items-center w-full my-6"
 	>
 		<div
 			class="w-[70%]"
-			v-for="item in assets"
+			v-for="item in items"
 		>
-			<p class="text-main text-[16px] ml-2">{{'Введите api-ключ для ' + item.name}}</p>
+			<p class="text-main text-[16px] ml-2">{{$t('settings.body.api_keys.api_keys_desk') + ' ' + item.name}}</p>
 			<CustomInput
 				class="w-full"
 				v-model="item.key"

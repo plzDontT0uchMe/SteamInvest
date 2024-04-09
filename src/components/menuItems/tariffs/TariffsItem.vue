@@ -1,27 +1,36 @@
 <script setup>
 
+import AcceptIcon from "@/components/menuIcons/AcceptIcon.vue";
+
 const props = defineProps({
-	item: {
+	tariff: {
 		type: Object
+	},
+	possibilities: {
+		type: Array
 	}
 })
 
 </script>
 
 <template>
-<div class="flex flex-col justify-center items-center bg-main-background rounded-xl py-2 px-4">
-	<div class="text-center text-main">{{ item.name }}</div>
+<div class="flex flex-col justify-center items-center bg-main-background rounded-xl py-2 px-4 w-96">
+	<div class="text-center text-main text-[22px] my-2">{{ tariff.name }}</div>
 	<div class="flex flex-col">
 		<div
-			v-for="possibilities in item.possibilities"
-			class="text-[14px]"
+			v-for="possibility in possibilities"
+			class="flex justify-between items-center w-full rounded-xl my-2 p-2"
 		>
-			{{ possibilities }}
+			<AcceptIcon
+				class="absolute flex justify-center items-center w-[16px] h-[16px] mr-4"
+				:class="tariff.possibilities.includes(possibility) ? 'fill-[#16A34A]' : 'fill-main-text'"
+			/>
+			<p class="ml-7">{{ possibility }}</p>
 		</div>
 	</div>
-	<div class="text-center">{{ item.price }}</div>
-	<button class="bg-green-600 hover:opacity-75 py-2 px-6 rounded-xl text-main" v-if="!item.is_active">Купить</button>
-	<button disabled class="bg-second-background py-2 px-6 rounded-xl text-main" v-else>Выбран</button>
+	<div class="text-center text-main text-[20px] my-2">{{ tariff.price }}</div>
+	<button class="bg-green-600 hover:opacity-75 active:scale-95 py-2 rounded-xl text-main mb-2 w-28" v-if="!tariff.is_active">{{$t('settings.body.tariffs.buy')}}</button>
+	<button disabled class="bg-second-background py-2 rounded-xl text-main mb-2 w-28" v-else>{{$t('settings.body.tariffs.selected')}}</button>
 </div>
 </template>
 

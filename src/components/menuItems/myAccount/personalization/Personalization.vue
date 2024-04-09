@@ -1,8 +1,8 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import axios from "@/axios/index.js";
-import MyAccountSpoiler from "@/components/menuItems/myAccount/MyAccountSpoiler.vue";
-import PreviewProfile from "@/components/menuItems/myAccount/PreviewProfile.vue";
+import PersonalizationSpoiler from "@/components/menuItems/myAccount/personalization/PersonalizationSpoiler.vue";
+import PreviewProfile from "@/components/menuItems/myAccount/personalization/PreviewProfile.vue";
 import MenuButtons from "@/components/menuItems/MenuButtons.vue";
 
 const assets = ref(null);
@@ -40,13 +40,13 @@ const selectedBackground = ref(undefined)
 		v-if="isAssetsReady"
 		class="flex flex-col justify-center items-center w-full my-6"
 	>
-		<MyAccountSpoiler
+		<PersonalizationSpoiler
 			:header="$t('settings.body.my_account.avatars')"
 			type="avatar"
 			v-model:assets="assets['avatar']"
 			v-model:selectedAsset="selectedAvatar"
 		/>
-		<MyAccountSpoiler
+		<PersonalizationSpoiler
 			:header="$t('settings.body.my_account.backgrounds')"
 			type="background"
 			v-model:assets="assets['background']"

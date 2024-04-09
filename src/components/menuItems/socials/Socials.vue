@@ -14,7 +14,7 @@ import reddit from "@/components/menuIcons/socialsIcons/RedditIcon.vue";
 
 //Пофиксить варнинги
 
-const items = ref([
+const socials = ref([
 	{
 		id: 1,
 		name: 'Steam',
@@ -84,23 +84,40 @@ const items = ref([
 	},
 ]);
 
+const authSocial = ref([
+	'Steam',
+	'Telegram',
+	'Discord',
+	'Tiktok'
+])
+
+const isSocialsReady = ref(true);
+
 </script>
 
 <template>
 	<div
+		v-if="isSocialsReady"
 		class="flex flex-col justify-center items-center w-full my-6"
 	>
 		<div class="w-[40%]">
-			<div v-for="item in items">
-				<div class="flex items-center w-full p-2 rounded-xl my-2" :style="{ background: item.bgColor }">
+			<div v-for="social in socials">
+				<div class="flex items-center w-full p-2 rounded-xl my-2 cursor-pointer hover:opacity-75 active:scale-95 select-none" :style="{ background: social.bgColor }">
 					<div class="flex justify-center items-center">
-						<component :is="item.svg" class="w-8 h-8"/>
+						<component :is="social.svg" class="w-8 h-8"/>
 					</div>
-					<div class="text-white text-center w-full text-[16px] ml-2">Продолжить с {{ item.name }}</div>
+					<div v-if="authSocial.indexOf(social.name) == -1" class="flex justify-center items-center text-white text-center w-full text-[16px] ml-2">
+						<p class="mr-1">{{$t('settings.body.socials.socials_continue')}}</p>
+						{{ social.name }}
+					</div>
+					<div v-else class="flex justify-center items-center text-white text-center w-full text-[16px] ml-2">
+						<p class="mr-1">{{$t('settings.body.socials.socials_connected')}}</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<span v-else class="loading loading-spinner w-20 m-auto flex justify-center items-center"></span>
 </template>
 
 <style scoped>

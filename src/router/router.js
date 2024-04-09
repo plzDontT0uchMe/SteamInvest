@@ -18,7 +18,20 @@ const router = createRouter({
                 {
                     path: 'my-account',
                     name: 'my-account',
-                    component: () => import("@/components/menuItems/myAccount/MyAccount.vue")
+                    redirect: {name: 'personalization'},
+                    children:
+                    [
+                        {
+                            path: 'personalization',
+                            name: 'personalization',
+                            component: () => import("@/components/menuItems/myAccount/personalization/Personalization.vue")
+                        },
+                        {
+                            path: 'general-information',
+                            name: 'general-information',
+                            component: () => import("@/components/menuItems/myAccount/generalInformation/GeneralInformation.vue")
+                        }
+                    ]
                 },
                 {
                     path: 'api-keys',
@@ -43,12 +56,12 @@ const router = createRouter({
                 {
                     path: 'friends',
                     name: 'friends',
-                    component: () => import("@/components/menuItems/Friends.vue")
+                    component: () => import("@/components/menuItems/friends/Friends.vue")
                 },
                 {
                     path: 'security',
                     name: 'security',
-                    component: () => import("@/components/menuItems/Security.vue")
+                    component: () => import("@/components/menuItems/security/Security.vue")
                 },
                 {
                     path: 'notifications',
@@ -58,10 +71,28 @@ const router = createRouter({
                 {
                     path: 'wallet',
                     name: 'wallet',
-                    component: () => import("@/components/menuItems/Wallet.vue")
+                    redirect: {name: 'personalization'},
+                    children:
+                        [
+                            {
+                                path: 'replenish-balance',
+                                name: 'replenish-balance',
+                                component: () => import("@/components/menuItems/wallet/replenishBalance/ReplenishBalance.vue")
+                            },
+                            {
+                                path: 'replenishment-history',
+                                name: 'replenishment-history',
+                                component: () => import("@/components/menuItems/wallet/replenishmentHistory/ReplenishmentHistory.vue")
+                            }
+                        ]
                 }
             ]
-        }
+        },
+        {
+            path: '/item/:market_hash',
+            name: 'item',
+            component: () => import("@/views/SteamMarketItem.vue")
+        },
     ]
 })
 
