@@ -4,13 +4,12 @@ import AboutIcon from "@/assets/images/steamInvestAbout.png";
 
 <template>
     <div>
-        <div class="flex justify-around items-center w-screen max-w-[1200px]">
-            <img class="w-[50%]" :src="AboutIcon">
-            <div class="w-[45%] text-white max-w-[50%]"><strong>Steam-Invest</strong> – ваш надежный компаньон в мире инвестиций в игровой платформе Steam.
-                Наша уникальная платформа предоставляет пользователям возможность тщательно отслеживать и управлять своими инвестициями в игры,
-                предметы, и другие цифровые активы на Steam.
-                <br/>Присоединяйтесь к Steam-Invest и начните эффективное управление своими инвестициями в игровом мире прямо сейчас!
-            </div>
+        <div class="flex flex-col justify-around items-center w-screen">
+            <div class="text-main text-[32px] my-12">Инструкция по использованию</div>
+	        <video class="w-96" autoplay muted loop preload="auto">
+		        <source src="@/assets/images/main_video_ru.mp4" type="video/mp4">
+		        Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 </template>

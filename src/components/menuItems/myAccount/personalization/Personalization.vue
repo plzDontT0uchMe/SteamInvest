@@ -12,6 +12,7 @@ const getAssets = (async () => {
 	isAssetsReady.value = false;
     try{
         const resp = await axios.get('/api/user/assets');
+		console.log(resp)
 	    if(resp?.data?.success)
 		    assets.value = resp['data']['data'];
 	    else

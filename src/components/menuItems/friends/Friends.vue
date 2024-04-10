@@ -80,12 +80,12 @@ const isFriendsReady = ref(true);
 			/>
 			<div class="flex justify-center items-center space-x-5 mb-6 ml-6">
 				<button
-					class="bg-blue-500 hover:bg-blue-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
+					class="bg-green-600 hover:bg-green-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
 				>
 					{{$t('settings.body.friends.accept_all')}}
 				</button>
 				<button
-					class="bg-blue-500 hover:bg-blue-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
+					class="bg-red-600 hover:bg-red-900 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
 				>
 					{{$t('settings.body.friends.decline_all')}}
 				</button>
@@ -96,7 +96,7 @@ const isFriendsReady = ref(true);
 			<div
 				v-for="friend in searchFriends"
 				:key="friend.id"
-				class="flex justify-between items-center w-full mb-6  bg-main-background p-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
+				class="flex justify-between items-center w-full mb-6  bg-second-background p-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out"
 			>
 				<div class="flex items-center space-x-5">
 					<img
@@ -112,12 +112,12 @@ const isFriendsReady = ref(true);
 				</div>
 				<div class="flex justify-center items-center space-x-5">
 					<button
-						class="bg-blue-500 hover:bg-blue-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
+						class="bg-green-600 hover:bg-green-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
 					>
 						{{$t('settings.body.friends.accept')}}
 					</button>
 					<button
-						class="bg-blue-500 hover:bg-blue-700 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
+						class="bg-red-600 hover:bg-red-900 active:scale-95 text-white text-[16px] text-nowrap py-2 rounded w-36"
 					>
 						{{$t('settings.body.friends.decline')}}
 					</button>

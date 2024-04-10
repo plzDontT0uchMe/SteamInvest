@@ -12,8 +12,6 @@ import steam from "@/components/menuIcons/socialsIcons/SteamIcon.vue";
 import google from "@/components/menuIcons/socialsIcons/GoogleIcon.vue";
 import reddit from "@/components/menuIcons/socialsIcons/RedditIcon.vue";
 
-//Пофиксить варнинги
-
 const socials = ref([
 	{
 		id: 1,

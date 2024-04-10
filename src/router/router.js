@@ -12,6 +12,7 @@ const router = createRouter({
         {
             path: '/settings',
             name: 'settings',
+            redirect: {name: 'my-account'},
             component: () => import("@/views/Settings.vue"),
             children:
             [
