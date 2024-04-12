@@ -105,23 +105,23 @@ const history = ref({
 
 const buttons = [
 	{
-		name: 'Day',
+		name: 'day',
 		onClick: () => getHistory('day')
 	},
 	{
-		name: 'Week',
+		name: 'week',
 		onClick: () => getHistory('week')
 	},
 	{
-		name: 'Month',
+		name: 'month',
 		onClick: () => getHistory('month')
 	},
 	{
-		name: 'Year',
+		name: 'year',
 		onClick: () => getHistory('year')
 	},
 	{
-		name: 'Lifetime',
+		name: 'lifetime',
 		onClick: () => getHistory('lifetime')
 	}
 ]
@@ -154,19 +154,19 @@ const isFollow = ref(false);
 								</div>
 							</div>
 							<div class="flex justify-center items-center text-xl my-2">
-								<p class="mr-1">Цена за сутки:</p>
+								<p class="mr-1">{{$t('item.avg_day_procent')}}:</p>
 								<p :class="parseInt(item.avg_day_procent) > 0 ? 'text-green-700' : 'text-red-700'">{{item.avg_day_procent}}%</p>
 							</div>
 							<div class="flex justify-center items-center text-xl my-2">
-								<p class="mr-1">Цена за неделю:</p>
+								<p class="mr-1">{{$t('item.avg_week_procent')}}:</p>
 								<p :class="parseInt(item.avg_week_procent) > 0 ? 'text-green-700' : 'text-red-700'">{{item.avg_week_procent}}%</p>
 							</div>
 							<div class="flex justify-center items-center text-xl my-2">
-								<p class="mr-1">Цена за месяц:</p>
+								<p class="mr-1">{{$t('item.avg_month_procent')}}:</p>
 								<p :class="parseInt(item.avg_month_procent) > 0 ? 'text-green-700' : 'text-red-700'">{{item.avg_month_procent}}%</p>
 							</div>
 							<div class="flex justify-center items-center text-xl mt-2 mb-6">
-								<p class="mr-1">Текущая цена:</p>
+								<p class="mr-1">{{$t('item.price')}}:</p>
 								<p class="text-main">{{item.price}}</p>
 							</div>
 						</div>
@@ -183,14 +183,14 @@ const isFollow = ref(false);
 			</div>
 			<div class="flex justify-center items-center my-6">
 				<div class="flex flex-col justify-center items-center w-full mx-12 bg-[rgb(20,20,20)] rounded-xl">
-					<p class="text-xl font-bold text-main my-2">History price</p>
+					<p class="text-xl font-bold text-main my-2">{{$t('item.history_price')}}</p>
 					<div class="w-full my-2">
 						<LineChart ref="lineChart" :chartData="chartData" :options="options"/>
 					</div>
 					<div class="self-end flex my-2 mx-6">
-						<p class="mx-2">Zoom graph:</p>
+						<p class="mx-2">{{$t('item.zoom_graph')}}:</p>
 						<div v-for="button in buttons" class="mx-2">
-							<button @click="button.onClick()" class="text-main">{{button.name}}</button>
+							<button @click="button.onClick()" class="text-main">{{$t(`item.${button.name}`)}}</button>
 						</div>
 					</div>
 				</div>

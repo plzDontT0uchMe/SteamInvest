@@ -58,14 +58,33 @@ const messages = {
                     "email": "Почта",
                     "password": "Пароль",
                     "confirm_password": "Подтвердите пароль",
+                },
+                "wallet": {
+                    "amount": "Сумма",
+                    "pay": "Оплатить",
+                    "to_pay": "К оплате"
                 }
             },
             "footers": {
                 "actions": {
-                    "cansel": "Отменить",
+                    "cancel": "Отменить",
                     "save": "Сохранить"
                 }
             }
+        },
+        "item": {
+            "price": "Текущая цена",
+            "avg_day_procent": "Цена за день",
+            "avg_week_procent": "Цена за неделю",
+            "avg_month_procent": "Цена за месяц",
+            "avg_year_procent": "Цена за год",
+            "history_price": "История цен",
+            "zoom_graph": "Увеличить график",
+            "day": "День",
+            "week": "Неделя",
+            "month": "Месяц",
+            "year": "Год",
+            "lifetime": "Всё время"
         }
     },
     en: {
@@ -125,14 +144,33 @@ const messages = {
                     "email": "Email",
                     "password": "Password",
                     "confirm_password": "Confirm password"
+                },
+                "wallet": {
+                    "amount": "Amount",
+                    "pay": "Pay",
+                    "to_pay": "To pay"
                 }
             },
             "footers": {
                 "actions": {
-                    "cansel": "Cansel",
+                    "cancel": "Cancel",
                     "save": "Save"
                 }
             }
+        },
+        "item": {
+            "price": "Current price",
+            "avg_day_procent": "Price per day",
+            "avg_week_procent": "Price per week",
+            "avg_month_procent": "Price per month",
+            "avg_year_procent": "Price per year",
+            "history_price": "History price",
+            "zoom_graph": "Zoom graph",
+            "day": "Day",
+            "week": "Week",
+            "month": "Month",
+            "year": "Year",
+            "lifetime": "Lifetime"
         }
     }
 }
