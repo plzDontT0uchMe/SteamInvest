@@ -98,15 +98,114 @@ const friends = ref([
 const selectedFriend = ref(null);
 const hoverFriend = ref(false);
 
+const myId = ref(0)
+
 const messages = ref({
 	1: [
 		{
 			id: 1,
-			sender_id: 1,
+			sender_id: 0,
 			date: new Date(),
-			type: 'text | image | video',
-			content: 'Привет, как дела?',
-		}
+			type: 'text', // text, image, video, audio, file
+			content: 'Ага',
+		},
+        {
+            id: 1,
+            sender_id: 0,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 1,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: '<TheFooter v-if="urls.includes(fullPath)" /> вот так тоже не работает))',
+        },
+        {
+            id: 1,
+            sender_id: 1,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Как правильно сделать?',
+        },
+        {
+            id: 1,
+            sender_id: 1,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'const fullPath = useRoute().fullPath\n' +
+                'const urls = [\'/buy\', \'/rent\']\n' +
+                '\n' +
+                '<TheFooter v-if="fullPath in urls" />\n' +
+                '\n' +
+                '\n' +
+                'Вот такая тема у меня работает магическим образом, я как то интуитивно это написал\n' +
+                'посмотрел доки по js arr. Это типа под капотом реализовано.\n' +
+                '\n' +
+                'for (let key in arr) {\n' +
+                '  alert( arr[key] ); // Яблоко, Апельсин, Груша\n' +
+                '}\n' +
+                '\n' +
+                'А где именно во вью доках такое написано может есть другие фишки которые js использует при помощи синтаксического сахара?',
+        },
+        {
+            id: 1,
+            sender_id: 3,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 3,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 1,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 1,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 2,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 2,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 2,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        },
+        {
+            id: 1,
+            sender_id: 2,
+            date: new Date(),
+            type: 'text', // text, image, video, audio, file
+            content: 'Привет, как дела?',
+        }
 	]
 });
 
@@ -161,9 +260,22 @@ const searchFriends = computed(() => {
 			<div v-if="selectedFriend" class="flex flex-col w-[70%] items-center m-6 ml-0 rounded-xl"> <!-- bg-second-background -->
 				<div class="text-main font-bold text-[24px] mb-2">{{selectedFriend.nametag}}</div>
 				<Hr class="w-full" />
-				<div class="flex-grow-[3] w-full h-full"></div>
+				<div class="flex flex-col-reverse flex-grow-[3] w-full h-full overflow-auto my-4 pr-2">
+                    <div
+                        class="flex my-2 rounded-xl first:mb-0 last:mt-0"
+                        :class="{'justify-end' : myId == message.sender_id}"
+                        v-for="message in messages[1]"
+                    >
+                        <div class="max-w-[50%]">
+                            <div class="relative flex justify-center items-center bg-second-background py-2 px-4 rounded-xl">
+                                <div class="mr-10">{{message.content}}</div>
+                                <div class="absolute right-3 bottom-0 text-[14px]">{{message.date.getHours()}}:{{message.date.getMinutes()}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<div class="relative flex items-center w-full">
-					<input type="text" class="w-full p-4 pl-10 pr-20 rounded-xl" placeholder="Type a message here..."/>
+					<input type="text" class="w-full p-4 pl-10 pr-20 rounded-xl bg-second-background" placeholder="Type a message here..."/>
 					<ClipIcon class="absolute ml-2 w-6 h-6"/>
 					<SmileIcon class="absolute right-8 mr-2 w-7 h-7"/>
 					<MicrophoneIcon class="absolute right-0 mr-2 w-7 h-7"/>
