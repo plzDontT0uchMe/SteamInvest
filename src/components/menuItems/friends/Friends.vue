@@ -6,52 +6,52 @@ import CustomInput from "@/components/CustomInput.vue";
 const friends = ref([
 	{
 		id: 1,
-		name: 'Friend 1',
+		nametag: 'Friend 1',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 2,
-		name: 'Friend 2',
+		nametag: 'Friend 2',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 3,
-		name: 'Friend 3',
+		nametag: 'Friend 3',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 4,
-		name: 'Friend 4',
+		nametag: 'Friend 4',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 5,
-		name: 'Friend 5',
+		nametag: 'Friend 5',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 6,
-		name: 'Friend 6',
+		nametag: 'Friend 6',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 7,
-		name: 'Friend 7',
+		nametag: 'Friend 7',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 8,
-		name: 'Friend 8',
+		nametag: 'Friend 8',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 9,
-		name: 'Friend 9',
+		nametag: 'Friend 9',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 	{
 		id: 10,
-		name: 'Friend 10',
+		nametag: 'Friend 10',
 		avatar: 'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
 	},
 ])
@@ -59,7 +59,7 @@ const friends = ref([
 const search = ref('')
 
 const searchFriends = computed(() => {
-	return friends.value.filter(friend => friend.name.toLowerCase().includes(search.value.toLowerCase()))
+	return friends.value.filter(friend => friend.nametag.toLowerCase().includes(search.value.toLowerCase()))
 });
 
 const isFriendsReady = ref(true);
@@ -101,13 +101,13 @@ const isFriendsReady = ref(true);
 				<div class="flex items-center space-x-5">
 					<img
 						:src="friend.avatar"
-						:alt="friend.name"
+						:alt="friend.nametag"
 						class="w-16 h-16 rounded-lg"
 					/>
 					<p
 						class="text-[16px]"
 					>
-						{{ friend.name }}
+						{{ friend.nametag }}
 					</p>
 				</div>
 				<div class="flex justify-center items-center space-x-5">
