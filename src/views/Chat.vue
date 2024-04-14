@@ -70,7 +70,7 @@ const friends = ref([
 		time: '12.03.2021'
 	},
 	{
-		id: 4,
+		id: 7,
 		nametag: 'Алексей',
 		avatar: 'https://cdn.oneesports.gg/cdn-data/2021/08/Dota2_Shadow_Fiend.jpg',
 		status: 'offline',
@@ -78,7 +78,7 @@ const friends = ref([
 		time: 'Ср'
 	},
 	{
-		id: 5,
+		id: 8,
 		nametag: 'Дмитрий',
 		avatar: 'https://cdn.oneesports.gg/cdn-data/2021/08/Dota2_Shadow_Fiend.jpg',
 		status: 'online',
@@ -86,7 +86,7 @@ const friends = ref([
 		time: 'Вт'
 	},
 	{
-		id: 6,
+		id: 9,
 		nametag: 'Андрей',
 		avatar: 'https://cdn.oneesports.gg/cdn-data/2021/08/Dota2_Shadow_Fiend.jpg',
 		status: 'offline',
@@ -103,35 +103,35 @@ const myId = ref(0)
 const messages = ref({
 	1: [
 		{
-			id: 1,
+			id: 44,
 			sender_id: 0,
 			date: new Date(),
 			type: 'text', // text, image, video, audio, file
 			content: 'Ага',
 		},
         {
-            id: 1,
+            id: 35,
             sender_id: 0,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 33,
             sender_id: 1,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: '<TheFooter v-if="urls.includes(fullPath)" /> вот так тоже не работает))',
         },
         {
-            id: 1,
+            id: 27,
             sender_id: 1,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Как правильно сделать?',
         },
         {
-            id: 1,
+            id: 24,
             sender_id: 1,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
@@ -151,61 +151,111 @@ const messages = ref({
                 'А где именно во вью доках такое написано может есть другие фишки которые js использует при помощи синтаксического сахара?',
         },
         {
-            id: 1,
+            id: 22,
             sender_id: 3,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 18,
             sender_id: 3,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 16,
             sender_id: 1,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 14,
             sender_id: 1,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 11,
             sender_id: 2,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 10,
             sender_id: 2,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 9,
             sender_id: 2,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         },
         {
-            id: 1,
+            id: 7,
             sender_id: 2,
             date: new Date(),
             type: 'text', // text, image, video, audio, file
             content: 'Привет, как дела?',
         }
+	],
+	2: [
+		{
+			id: 5,
+			sender_id: 0,
+			date: new Date(),
+			type: 'text', // text, image, video, audio, file
+			content: 'Ага',
+		},
+		{
+			id: 4,
+			sender_id: 0,
+			date: new Date(),
+			type: 'text', // text, image, video, audio, file
+			content: 'Привет, как дела?',
+		},
+		{
+			id: 3,
+			sender_id: 1,
+			date: new Date(),
+			type: 'text', // text, image, video, audio, file
+			content: '<TheFooter v-if="urls.includes(fullPath)" /> вот так тоже не работает))',
+		},
+		{
+			id: 2,
+			sender_id: 1,
+			date: new Date(),
+			type: 'text', // text, image, video, audio, file
+			content: 'Как правильно сделать?',
+		},
+		{
+			id: 1,
+			sender_id: 1,
+			date: new Date(),
+			type: 'text', // text, image, video, audio, file
+			content: 'const fullPath = useRoute().fullPath\n' +
+				'const urls = [\'/buy\', \'/rent\']\n' +
+				'\n' +
+				'<TheFooter v-if="fullPath in urls" />\n' +
+				'\n' +
+				'\n' +
+				'Вот такая тема у меня работает магическим образом, я как то интуитивно это написал\n' +
+				'посмотрел доки по js arr. Это типа под капотом реализовано.\n' +
+				'\n' +
+				'for (let key in arr) {\n' +
+				'  alert( arr[key] ); // Яблоко, Апельсин, Груша\n' +
+				'}\n' +
+				'\n' +
+				'А где именно во вью доках такое написано может есть другие фишки которые js использует при помощи синтаксического сахара?',
+		},
 	]
 });
 
@@ -213,6 +263,29 @@ const search = ref('')
 
 const searchFriends = computed(() => {
 	return friends.value.filter(friend => friend.nametag.toLowerCase().includes(search.value.toLowerCase()))
+});
+
+const indexMessages = ref(1);
+
+const firstMessage = (message) => {
+	const messageIndex = messages.value[indexMessages.value].findIndex(item => item.id == message.id);
+	if(messages.value[indexMessages.value][messageIndex + 1] == undefined || messages.value[indexMessages.value][messageIndex + 1].sender_id != message.sender_id)
+		return true;
+	return false;
+};
+
+const lastMessage = (message) => {
+	const messageIndex = messages.value[indexMessages.value].findIndex(item => item.id == message.id);
+	if(messages.value[indexMessages.value][messageIndex - 1] == undefined || messages.value[indexMessages.value][messageIndex - 1].sender_id != message.sender_id)
+		return true;
+	return false;
+};
+
+//messages.value[indexMessages.value].filter((obj, index) => messages.value[indexMessages.value].findIndex(testObj => testObj.sender_id === obj.sender_id) === index).length
+
+const countMembers = computed(() => {
+	console.log(messages.value[indexMessages.value].filter((obj, index) => messages.value[indexMessages.value].findIndex(testObj => testObj.sender_id === obj.sender_id) === index).length);
+	return messages.value[indexMessages.value].filter((obj, index) => messages.value[indexMessages.value].findIndex(testObj => testObj.sender_id === obj.sender_id) === index).length;
 });
 
 </script>
@@ -243,8 +316,8 @@ const searchFriends = computed(() => {
 							<UserAvatar class="min-w-14 w-14 min-h-14 h-14" :user="friend"/>
 							<div
 								v-if="friend.status == 'online'"
-								class="absolute right-[5px] bottom-[5px] w-2 h-2 rounded-full bg-green-600 outline outline-[3px] outline-second-background"
-								:class="{'outline-navbar' : hoverFriend == friend}"
+								class="absolute right-[5px] bottom-[5px] w-2 h-2 rounded-full bg-green-600 outline outline-[3px]"
+								:class="hoverFriend == friend ? 'outline-navbar' : 'outline-second-background'"
 							></div>
 						</div>
 						<div class="w-full overflow-hidden">
@@ -262,15 +335,32 @@ const searchFriends = computed(() => {
 				<Hr class="w-full" />
 				<div class="flex flex-col-reverse flex-grow-[3] w-full h-full overflow-auto my-4 pr-2">
                     <div
-                        class="flex my-2 rounded-xl first:mb-0 last:mt-0"
-                        :class="{'justify-end' : myId == message.sender_id}"
-                        v-for="message in messages[1]"
+                        class="flex items-center my-2 rounded-xl first:mb-0 last:mt-0"
+                        :class="{'flex-row-reverse' : myId == message.sender_id}"
+                        v-for="message in messages[indexMessages]"
                     >
+	                    <div v-if="myId != message.sender_id && countMembers > 2" class="self-end min-w-8 w-8 min-h-8 h-8 mr-2">
+		                    <UserAvatar class="w-full h-full" v-if="lastMessage(message) && message?.sender_id != myId"  :user="friends.find((friend) => friend.id == message.sender_id)" />
+	                    </div>
+	                    <div
+		                    class="self-end w-[16px] h-[16px] overflow-hidden rotate-180"
+	                        :class="{'rotate-[270deg]' : myId == message.sender_id}"
+	                    >
+		                    <div v-if="lastMessage(message)" class="relative flex justify-center items-center w-[32px] h-[32px] bg-second-background">
+			                    <div class="w-full h-full rounded-full bg-navbar"></div>
+		                    </div>
+	                    </div>
                         <div class="max-w-[50%]">
-                            <div class="relative flex justify-center items-center bg-second-background py-2 px-4 rounded-xl">
-                                <div class="mr-10">{{message.content}}</div>
-                                <div class="absolute right-3 bottom-0 text-[14px]">{{message.date.getHours()}}:{{message.date.getMinutes()}}</div>
-                            </div>
+	                        <div
+		                        class="flex flex-col bg-second-background rounded-xl py-1"
+	                            :class="[{'rounded-bl-none' : lastMessage(message) && myId != message.sender_id}, {'rounded-br-none' : lastMessage(message) && myId == message.sender_id}]"
+	                        >
+		                        <div v-if="firstMessage(message) && myId != message.sender_id" class="text-main text-[16px] font-bold py-1 ml-4">{{friends.find((friend) => friend.id == message.sender_id)?.nametag}}</div>
+		                        <div class="relative flex justify-center items-center py-1 px-4">
+			                        <div class="mr-10">{{message.content}}</div>
+			                        <div class="absolute right-2 bottom-0 text-[14px]">{{message.date.getHours()}}:{{message.date.getMinutes()}}</div>
+		                        </div>
+	                        </div>
                         </div>
                     </div>
                 </div>
@@ -286,4 +376,5 @@ const searchFriends = computed(() => {
 </template>
 
 <style scoped>
+
 </style>
