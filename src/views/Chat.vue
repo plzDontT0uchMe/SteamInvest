@@ -8,6 +8,7 @@ import UserAvatar from "@/components/UserAvatar.vue";
 import ClipIcon from "@/components/menuIcons/ClipIcon.vue";
 import SmileIcon from "@/components/menuIcons/SmileIcon.vue";
 import MicrophoneIcon from "@/components/menuIcons/MicrophoneIcon.vue";
+import SendIcon from "@/components/menuIcons/SendIcon.vue";
 
 onMounted(() => {
 	addEventListener('keydown', (e) => {
@@ -288,6 +289,21 @@ const countMembers = computed(() => {
 	return messages.value[indexMessages.value].filter((obj, index) => messages.value[indexMessages.value].findIndex(testObj => testObj.sender_id === obj.sender_id) === index).length;
 });
 
+const newMessage = ref('');
+
+const sendMessage = () => {
+	if(newMessage.value != ''){
+		messages.value[indexMessages.value].unshift({
+			id: messages.value[indexMessages.value].length + 1,
+			sender_id: 0,
+			date: new Date(),
+			type: 'text',
+			content: newMessage.value
+		});
+		newMessage.value = '';
+	}
+};
+
 </script>
 
 <template>
@@ -365,10 +381,17 @@ const countMembers = computed(() => {
                     </div>
                 </div>
 				<div class="relative flex items-center w-full">
-					<input type="text" class="w-full p-4 pl-10 pr-20 rounded-xl bg-second-background" placeholder="Type a message here..."/>
+					<input
+						type="text"
+						class="w-full p-4 pl-10 pr-20 rounded-xl bg-second-background"
+						placeholder="Type a message here..."
+						v-model="newMessage"
+						@keydown.enter="sendMessage"
+					/>
 					<ClipIcon class="absolute ml-2 w-6 h-6"/>
 					<SmileIcon class="absolute right-8 mr-2 w-7 h-7"/>
-					<MicrophoneIcon class="absolute right-0 mr-2 w-7 h-7"/>
+					<MicrophoneIcon v-if="newMessage == ''" class="absolute right-0 mr-2 w-7 h-7"/>
+					<SendIcon v-else class="absolute right-0 mr-2 w-7 h-7 cursor-pointer hover:scale-95 active:scale-90" @click="sendMessage" />
 				</div>
 			</div>
 		</div>
